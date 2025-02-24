@@ -5,10 +5,17 @@ const tokenSchema = new Schema<TToken>({
     name: {
         type: String,
         required: true,
+        unique: true,
+    },
+    access: {
+        type: String,
+        enum: ['admin', 'user'],
+        default: 'user',
     },
     token: {
         type: String,
         required: true,
+        unique: true,
     },
     exp: {
         type: Date,
