@@ -1,4 +1,5 @@
-import { Router } from "express";
+import { Router } from 'express';
+import { TokenRouter } from '../modules/token/token.route';
 
 const MainRouter = Router();
 
@@ -7,7 +8,12 @@ type TRoute = {
   router: Router;
 };
 
-const routes: TRoute[] = []
+const routes: TRoute[] = [
+  {
+    path: '/token',
+    router: TokenRouter,
+  },
+];
 
 routes.map((route) => MainRouter.use(route.path, route.router));
 
