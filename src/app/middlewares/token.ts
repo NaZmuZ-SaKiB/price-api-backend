@@ -25,3 +25,5 @@ const token = catchAsync(async (req, res, next) => {
   req.token = isTokenExists;
   next();
 });
+
+export default token;
