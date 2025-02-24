@@ -12,7 +12,7 @@ app.use(cors({ origin: true, credentials: true }));
 // Application Routes
 app.use('/api', MainRouter);
 
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
   res.send('Price Api Backend!');
 });
 
