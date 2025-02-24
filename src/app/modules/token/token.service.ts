@@ -49,6 +49,8 @@ const removeExpiredTokens = async () => {
       expireAt: { $lt: new Date() },
     });
   }
+
+  return;
 };
 
 export const TokenService = {
