@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import MainRouter from './app/routes';
-// import globalErrorHandler from './app/middlewares/globalErrorHandler';
+import globalErrorHandler from './app/middlewares/globalErrorHandler';
 
 const app: Application = express();
 
@@ -16,6 +16,6 @@ app.get('/', (req, res) => {
   res.send('Price Api Backend!');
 });
 
-// app.use(globalErrorHandler);
+app.use(globalErrorHandler);
 
 export default app;
