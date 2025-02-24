@@ -1,0 +1,32 @@
+{
+  "name": "price-api-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "lint": "eslint src --ignore-path .eslintignore --ext .ts",
+    "lint:fix": "npx eslint src --fix"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "http-status": "^2.1.0",
+    "mongoose": "^8.10.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.24.1",
+    "@typescript-eslint/parser": "^8.24.1",
+    "eslint": "^9.21.0",
+    "eslint-config-prettier": "^10.0.1",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.1"
+  }
+}
