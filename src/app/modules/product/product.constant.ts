@@ -1,0 +1,1 @@
+const productSearchableFields = ['title', 'url'];
