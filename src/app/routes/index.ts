@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { TokenRouter } from '../modules/token/token.route';
+import { ScrapeRouter } from '../modules/scrape/scrape.route';
 
 const MainRouter = Router();
 
@@ -12,6 +13,10 @@ const routes: TRoute[] = [
   {
     path: '/token',
     router: TokenRouter,
+  },
+  {
+    path: '/scrape',
+    router: ScrapeRouter,
   },
 ];
 
