@@ -1,4 +1,5 @@
 import calculatePagination from '../../utils/calculatePagination';
+import { productSearchableFields } from './product.constant';
 import { Product } from './product.model';
 
 const getAll = async (filters: Record<string, any>) => {
