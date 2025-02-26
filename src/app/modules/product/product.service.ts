@@ -1,3 +1,4 @@
+import { FilterQuery } from 'mongoose';
 import calculatePagination from '../../utils/calculatePagination';
 import { productSearchableFields } from './product.constant';
 import { Product } from './product.model';
@@ -27,7 +28,13 @@ const getAll = async (filters: Record<string, any>) => {
     })),
   };
 
-  const products = await Product.find({ ...searchConditions })
+  const query: FilterQuery<TProduct> = {};
+
+  if (filters?.done) {
+    query.done = filters.done === 'true' ? true : false;
+  }
+
+  const products = await Product.find({ ...searchConditions, ...query })
     .sort({ [sort]: sortOrder } as any)
     .skip(skip)
     .limit(limit);
