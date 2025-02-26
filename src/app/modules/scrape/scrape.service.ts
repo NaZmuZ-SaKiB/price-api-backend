@@ -135,6 +135,7 @@ const scrape = async (fullUrl: string) => {
             ...product,
             lastChecked: new Date(),
             lastModified: new Date(),
+            done: true,
           },
         },
       });
