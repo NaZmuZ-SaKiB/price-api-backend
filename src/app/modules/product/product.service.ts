@@ -1,6 +1,7 @@
 import calculatePagination from '../../utils/calculatePagination';
 import { productSearchableFields } from './product.constant';
 import { Product } from './product.model';
+import { TProduct } from './product.type';
 
 const getAll = async (filters: Record<string, any>) => {
   const { page, limit, skip, sort, sortOrder } = calculatePagination(filters);
@@ -43,6 +44,13 @@ const getAll = async (filters: Record<string, any>) => {
   };
 };
 
+const update = async (id: string, payload: Partial<TProduct>) => {
+  await Product.findByIdAndUpdate(id, payload);
+
+  return;
+};
+
 export const ProductService = {
   getAll,
+  update,
 };
