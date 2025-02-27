@@ -39,7 +39,7 @@ const getAll = async (filters: Record<string, any>) => {
     .skip(skip)
     .limit(limit);
 
-  const total = await Product.countDocuments({ ...searchConditions });
+  const total = await Product.countDocuments({ ...searchConditions, ...query });
 
   return {
     data: products,
