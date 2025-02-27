@@ -1,4 +1,4 @@
-type TUrl = {
+export type TUrl = {
   name: string;
   url: string;
 
