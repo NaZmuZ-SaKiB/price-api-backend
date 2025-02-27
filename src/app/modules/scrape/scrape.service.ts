@@ -113,21 +113,23 @@ const scrape = async (fullUrl: string) => {
       // Check if price has changed
       const priceChanged = existingProduct.price !== product.price;
 
-      updateOperations.push({
-        updateOne: {
-          filter: { url: product.url } as FilterQuery<TProduct>,
-          update: {
-            $set: {
-              ...product,
-              lastModified: priceChanged
-                ? new Date()
-                : existingProduct.lastModified,
-              lastChecked: new Date(),
-              done: false,
+      if (priceChanged) {
+        updateOperations.push({
+          updateOne: {
+            filter: { url: product.url } as FilterQuery<TProduct>,
+            update: {
+              $set: {
+                ...product,
+                lastModified: priceChanged
+                  ? new Date()
+                  : existingProduct.lastModified,
+                lastChecked: new Date(),
+                done: false,
+              },
             },
           },
-        },
-      });
+        });
+      }
     } else {
       createOperations.push({
         insertOne: {
@@ -150,7 +152,13 @@ const scrape = async (fullUrl: string) => {
     await Product.bulkWrite(createOperations);
   }
 
-  return { totalProducts: products.length, totalPages };
+  return {
+    totalProducts: products.length,
+    totalPages,
+    products,
+    newProducts: createOperations.length,
+    updatedProducts: updateOperations.length,
+  };
 };
 
 export const ScrapeService = {
