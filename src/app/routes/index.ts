@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { TokenRouter } from '../modules/token/token.route';
 import { ScrapeRouter } from '../modules/scrape/scrape.route';
 import { ProductRouter } from '../modules/product/product.route';
+import { UrlRouter } from '../modules/url/url.route';
 
 const MainRouter = Router();
 
@@ -22,6 +23,10 @@ const routes: TRoute[] = [
   {
     path: '/product',
     router: ProductRouter,
+  },
+  {
+    path: '/url',
+    router: UrlRouter,
   },
 ];
 
