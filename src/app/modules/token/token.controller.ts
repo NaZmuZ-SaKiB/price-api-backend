@@ -26,13 +26,14 @@ const get = catchAsync(async (req, res) => {
 });
 
 const getAll = catchAsync(async (req, res) => {
-  const result = await TokenService.getAll();
+  const result = await TokenService.getAll(req.query);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Tokens fetched successfully',
-    data: result,
+    data: result.data,
+    meta: result.meta,
   });
 });
 
