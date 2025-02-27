@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import AppError from '../../errors/AppError';
 import { Token } from './token.model';
 import { TToken } from './token.type';
+import calculatePagination from '../../utils/calculatePagination';
 
 const create = async (payload: TToken) => {
   const isTokenExist = await Token.find({
@@ -25,8 +26,30 @@ const get = async (id: string) => {
   return token;
 };
 
-const getAll = async () => {
-  return await Token.find().sort({ createdAt: -1 });
+const getAll = async (filters: Record<string, any>) => {
+  const { page, limit, skip, sort, sortOrder } = calculatePagination(filters);
+
+  // handle search
+  const searchConditions = {
+    $or: ['name', 'url'].map((field) => ({
+      [field]: { $regex: filters?.searchTerm ?? '', $options: 'i' },
+    })),
+  };
+  const tokens = await Token.find({ ...searchConditions })
+    .sort({ [sort]: sortOrder } as any)
+    .skip(skip)
+    .limit(limit);
+
+  const total = await Token.countDocuments({ ...searchConditions });
+
+  return {
+    data: tokens,
+    meta: {
+      page,
+      limit,
+      total,
+    },
+  };
 };
 
 const remove = async (id: string) => {
