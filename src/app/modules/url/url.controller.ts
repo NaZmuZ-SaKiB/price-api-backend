@@ -52,7 +52,7 @@ const remove = catchAsync(async (req, res) => {
   const result = await UrlService.remove(req.params.id);
 
   sendResponse(res, {
-    statusCode: httpStatus.NO_CONTENT,
+    statusCode: httpStatus.OK,
     success: true,
     data: result,
     message: 'Url deleted successfully',
