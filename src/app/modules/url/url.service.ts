@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import AppError from '../../errors/AppError';
 import calculatePagination from '../../utils/calculatePagination';
 import { Url } from './url.model';
+import { TUrl } from './url.type';
 
 const create = async (payload: TUrl) => {
   await Url.create(payload);
