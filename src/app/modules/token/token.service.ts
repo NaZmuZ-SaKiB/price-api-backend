@@ -3,6 +3,8 @@ import AppError from '../../errors/AppError';
 import { Token } from './token.model';
 import { TToken } from './token.type';
 import calculatePagination from '../../utils/calculatePagination';
+import { jwtHelpers } from '../../utils/jwtHelpers';
+import config from '../../config';
 
 const create = async (payload: TToken) => {
   const isTokenExist = await Token.find({
@@ -76,10 +78,27 @@ const removeExpiredTokens = async () => {
   return;
 };
 
+const signIn = async (token: string) => {
+  const tokenExists = await Token.findOne({ token });
+
+  if (!tokenExists) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Token not found');
+  }
+
+  const jwt = jwtHelpers.generateToken(
+    { token: tokenExists?.token, access: tokenExists?.access },
+    config.jwt_access_secret as string,
+    config.jwt_access_expires_in as string,
+  );
+
+  return jwt;
+};
+
 export const TokenService = {
   create,
   get,
   getAll,
   remove,
   removeExpiredTokens,
+  signIn,
 };
