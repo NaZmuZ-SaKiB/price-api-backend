@@ -26,7 +26,19 @@ const update = catchAsync(async (req, res) => {
   });
 });
 
+const updateCount = catchAsync(async (req, res) => {
+  const result = await ProductService.updateCount();
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Got Count successfully',
+    data: result,
+  });
+});
+
 export const ProductController = {
   getAll,
   update,
+  updateCount,
 };
