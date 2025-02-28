@@ -57,7 +57,14 @@ const update = async (id: string, payload: Partial<TProduct>) => {
   return;
 };
 
+const updateCount = async () => {
+  const count = await Product.countDocuments({ done: false });
+
+  return { count };
+};
+
 export const ProductService = {
   getAll,
   update,
+  updateCount,
 };
