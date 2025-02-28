@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { TokenService } from './token.service';
+import AppError from '../../errors/AppError';
 
 const create = catchAsync(async (req, res) => {
   const result = await TokenService.create(req.body);
@@ -59,10 +60,26 @@ const removeExpiredTokens = catchAsync(async (req, res) => {
   });
 });
 
+const signIn = catchAsync(async (req, res) => {
+  if (!req.body?.token) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Token is required');
+  }
+
+  const result = await TokenService.signIn(req.body?.token);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Sign in successfully',
+    data: result,
+  });
+});
+
 export const TokenController = {
   create,
   get,
   getAll,
   remove,
   removeExpiredTokens,
+  signIn,
 };
