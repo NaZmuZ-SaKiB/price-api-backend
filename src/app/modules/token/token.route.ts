@@ -9,6 +9,7 @@ router.get('/:id', TokenController.get);
 
 // POST
 router.post('/', TokenController.create);
+router.post('/sign-in', TokenController.signIn);
 
 // DELETE
 router.delete('/expired', TokenController.removeExpiredTokens);
