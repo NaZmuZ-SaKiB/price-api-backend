@@ -6,7 +6,7 @@ import { TProduct } from '../product/product.type';
 import AppError from '../../errors/AppError';
 import { History } from '../history/history.model';
 
-const scrape = async (fullUrl: string) => {
+const scrape = async (token: any, fullUrl: string) => {
   if (!fullUrl) {
     throw new AppError(httpStatus.BAD_REQUEST, 'URL is required');
   }
@@ -159,6 +159,7 @@ const scrape = async (fullUrl: string) => {
     totalPages,
     newProducts: createOperations.length,
     updatedProducts: updateOperations.length,
+    scrapedBy: token?._id,
   });
 
   return {
