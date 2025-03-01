@@ -4,6 +4,7 @@ import puppeteer from 'puppeteer';
 import { Product } from '../product/product.model';
 import { TProduct } from '../product/product.type';
 import AppError from '../../errors/AppError';
+import { History } from '../history/history.model';
 
 const scrape = async (fullUrl: string) => {
   if (!fullUrl) {
@@ -151,6 +152,14 @@ const scrape = async (fullUrl: string) => {
   if (createOperations.length > 0) {
     await Product.bulkWrite(createOperations);
   }
+
+  await History.create({
+    url: fullUrl,
+    totalProducts: products.length,
+    totalPages,
+    newProducts: createOperations.length,
+    updatedProducts: updateOperations.length,
+  });
 
   return {
     totalProducts: products.length,
