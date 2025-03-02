@@ -11,7 +11,19 @@ const scrape = async (token: any, fullUrl: string) => {
     throw new AppError(httpStatus.BAD_REQUEST, 'URL is required');
   }
 
+  if (!fullUrl.startsWith('http')) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'URL is not valid. It should start with http or https',
+    );
+  }
+
   const url = new URL(fullUrl);
+
+  if (url.host !== 'startech.com.bd') {
+    throw new AppError(httpStatus.BAD_REQUEST, 'URL is not supported');
+  }
+
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
