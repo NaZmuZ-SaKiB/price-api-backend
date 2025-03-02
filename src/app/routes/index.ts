@@ -3,6 +3,7 @@ import { TokenRouter } from '../modules/token/token.route';
 import { ScrapeRouter } from '../modules/scrape/scrape.route';
 import { ProductRouter } from '../modules/product/product.route';
 import { UrlRouter } from '../modules/url/url.route';
+import { HistoryRouter } from '../modules/history/history.route';
 
 const MainRouter = Router();
 
@@ -27,6 +28,10 @@ const routes: TRoute[] = [
   {
     path: '/url',
     router: UrlRouter,
+  },
+  {
+    path: '/history',
+    router: HistoryRouter,
   },
 ];
 
