@@ -12,6 +12,7 @@ const getAll = async (filters: Record<string, any>) => {
   };
 
   const history = await History.find({ ...searchConditions })
+    .populate('scrapedBy')
     .sort({ [sort]: sortOrder } as any)
     .skip(skip)
     .limit(limit);
