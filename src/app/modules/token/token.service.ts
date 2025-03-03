@@ -6,6 +6,8 @@ import calculatePagination from '../../utils/calculatePagination';
 import { jwtHelpers } from '../../utils/jwtHelpers';
 import config from '../../config';
 import { Product } from '../product/product.model';
+import { Url } from '../url/url.model';
+import { History } from '../history/history.model';
 
 const create = async (payload: TToken) => {
   const isTokenExist = await Token.find({
@@ -104,11 +106,16 @@ const dashboard = async () => {
   const totalProducts = await Product.countDocuments();
   const priceUpdates = await Product.find({ done: false }).countDocuments();
 
+  const savedUrls = await Url.countDocuments();
+  const history = await History.countDocuments();
+
   return {
     totalTokens,
     totalExpiredTokens,
     totalProducts,
     priceUpdates,
+    savedUrls,
+    history,
   };
 };
 
