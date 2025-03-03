@@ -5,6 +5,7 @@ const router = Router();
 
 // GET
 router.get('/', TokenController.getAll);
+router.get('/dashboard', TokenController.dashboard);
 router.get('/:id', TokenController.get);
 
 // POST
