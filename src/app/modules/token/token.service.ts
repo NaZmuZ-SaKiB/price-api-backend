@@ -5,6 +5,7 @@ import { TToken } from './token.type';
 import calculatePagination from '../../utils/calculatePagination';
 import { jwtHelpers } from '../../utils/jwtHelpers';
 import config from '../../config';
+import { Product } from '../product/product.model';
 
 const create = async (payload: TToken) => {
   const isTokenExist = await Token.find({
@@ -94,6 +95,23 @@ const signIn = async (token: string) => {
   return jwt;
 };
 
+const dashboard = async () => {
+  const totalTokens = await Token.countDocuments();
+  const totalExpiredTokens = await Token.countDocuments({
+    exp: { $lt: new Date() },
+  });
+
+  const totalProducts = await Product.countDocuments();
+  const priceUpdates = await Product.find({ done: false }).countDocuments();
+
+  return {
+    totalTokens,
+    totalExpiredTokens,
+    totalProducts,
+    priceUpdates,
+  };
+};
+
 export const TokenService = {
   create,
   get,
@@ -101,4 +119,5 @@ export const TokenService = {
   remove,
   removeExpiredTokens,
   signIn,
+  dashboard,
 };
