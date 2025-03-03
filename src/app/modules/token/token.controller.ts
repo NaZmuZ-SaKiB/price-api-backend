@@ -75,6 +75,17 @@ const signIn = catchAsync(async (req, res) => {
   });
 });
 
+const dashboard = catchAsync(async (req, res) => {
+  const result = await TokenService.dashboard();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Dashboard fetched successfully',
+    data: result,
+  });
+});
+
 export const TokenController = {
   create,
   get,
@@ -82,4 +93,5 @@ export const TokenController = {
   remove,
   removeExpiredTokens,
   signIn,
+  dashboard,
 };
