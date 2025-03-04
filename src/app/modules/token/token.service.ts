@@ -88,8 +88,11 @@ const removeExpiredTokens = async () => {
 
   if (expiredTokens.length > 0) {
     await Token.deleteMany({
-      expireAt: { $lt: new Date() },
+      exp: { $lt: new Date() },
+      access: 'user',
     });
+  } else {
+    throw new AppError(httpStatus.NOT_FOUND, 'No expired tokens found');
   }
 
   return;
