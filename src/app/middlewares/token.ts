@@ -32,10 +32,12 @@ const token = catchAsync(async (req, res, next) => {
     throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid token');
   }
 
-  const isExpired = new Date(isTokenExists.exp) < new Date();
+  if (isTokenExists.access !== 'admin') {
+    const isExpired = new Date(isTokenExists.exp) < new Date();
 
-  if (isExpired) {
-    throw new AppError(httpStatus.UNAUTHORIZED, 'Token expired');
+    if (isExpired) {
+      throw new AppError(httpStatus.UNAUTHORIZED, 'Token expired');
+    }
   }
 
   req.token = isTokenExists;
