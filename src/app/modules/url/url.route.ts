@@ -1,19 +1,20 @@
 import { Router } from 'express';
 import { UrlController } from './url.controller';
+import token from '../../middlewares/token';
 
 const router = Router();
 
 // GET
-router.get('/', UrlController.getAll);
-router.get('/:id', UrlController.get);
+router.get('/', token, UrlController.getAll);
+router.get('/:id', token, UrlController.get);
 
 // POST
-router.post('/', UrlController.create);
+router.post('/', token, UrlController.create);
 
 // PATCH
-router.patch('/:id', UrlController.update);
+router.patch('/:id', token, UrlController.update);
 
 // DELETE
-router.delete('/:id', UrlController.remove);
+router.delete('/:id', token, UrlController.remove);
 
 export const UrlRouter = router;
