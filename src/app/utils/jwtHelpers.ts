@@ -5,6 +5,7 @@ const generateToken = async (
   payload: {
     token: string;
     access: TTokenAccess;
+    name: string;
   },
   secret: string,
   expiresIn: string,
