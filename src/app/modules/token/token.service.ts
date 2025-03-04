@@ -58,11 +58,24 @@ const getAll = async (filters: Record<string, any>) => {
 };
 
 const remove = async (id: string) => {
-  const token = await Token.findByIdAndDelete(id);
+  const token = await Token.findById(id);
 
   if (!token) {
     throw new AppError(httpStatus.NOT_FOUND, 'Token not found');
   }
+
+  if (token.access === 'admin') {
+    const adminTokens = await Token.countDocuments({ access: 'admin' });
+
+    if (adminTokens === 1) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'Cannot delete the last admin token',
+      );
+    }
+  }
+
+  await Token.findByIdAndDelete(id);
 
   return token;
 };
@@ -70,6 +83,7 @@ const remove = async (id: string) => {
 const removeExpiredTokens = async () => {
   const expiredTokens = await Token.find({
     exp: { $lt: new Date() },
+    access: 'user',
   });
 
   if (expiredTokens.length > 0) {
@@ -101,6 +115,7 @@ const dashboard = async () => {
   const totalTokens = await Token.countDocuments();
   const totalExpiredTokens = await Token.countDocuments({
     exp: { $lt: new Date() },
+    access: 'user',
   });
 
   const totalProducts = await Product.countDocuments();
