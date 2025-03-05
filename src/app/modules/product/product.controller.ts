@@ -37,8 +37,20 @@ const updateCount = catchAsync(async (req, res) => {
   });
 });
 
+const removeNotInStock = catchAsync(async (req, res) => {
+  const result = await ProductService.removeNotInStock();
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Products removed successfully',
+    data: result,
+  });
+});
+
 export const ProductController = {
   getAll,
   update,
   updateCount,
+  removeNotInStock,
 };
