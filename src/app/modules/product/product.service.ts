@@ -63,8 +63,15 @@ const updateCount = async () => {
   return { count };
 };
 
+const removeNotInStock = async () => {
+  await Product.deleteMany({ status: { $ne: 'in-stock' } });
+
+  return;
+};
+
 export const ProductService = {
   getAll,
   update,
   updateCount,
+  removeNotInStock,
 };
