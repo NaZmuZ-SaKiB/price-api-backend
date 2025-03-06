@@ -20,7 +20,7 @@ const scrape = async (token: any, fullUrl: string) => {
 
   const url = new URL(fullUrl);
 
-  if (url.host !== 'startech.com.bd') {
+  if (!['startech.com.bd', 'www.startech.com.bd'].includes(url.host)) {
     throw new AppError(httpStatus.BAD_REQUEST, 'URL is not supported');
   }
 
