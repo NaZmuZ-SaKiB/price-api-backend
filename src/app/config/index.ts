@@ -13,4 +13,6 @@ export default {
   jwt_access_expires_in: process.env.JWT_ACCESS_EXPIRES_IN,
 
   database_url: process.env.DATABASE_URL,
+
+  admin_password: process.env.ADMIN_PASSWORD,
 };
