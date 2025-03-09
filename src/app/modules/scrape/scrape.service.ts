@@ -112,6 +112,9 @@ const scrape = async (token: any, fullUrl: string) => {
   const updateOperations = [];
   const createOperations = [];
 
+  const updatedProducts = [];
+  const newProducts = [];
+
   const existingProducts = await Product.find(
     { url: { $in: products.map((p) => p.url) } },
     { url: 1, price: 1 },
@@ -142,6 +145,7 @@ const scrape = async (token: any, fullUrl: string) => {
             },
           },
         });
+        updatedProducts.push(product);
       }
     } else {
       createOperations.push({
@@ -154,6 +158,7 @@ const scrape = async (token: any, fullUrl: string) => {
           },
         },
       });
+      newProducts.push(product);
     }
   }
 
@@ -177,8 +182,8 @@ const scrape = async (token: any, fullUrl: string) => {
   return {
     totalPages,
     products,
-    newProducts: createOperations,
-    updatedProducts: updateOperations,
+    newProducts,
+    updatedProducts,
   };
 };
 
