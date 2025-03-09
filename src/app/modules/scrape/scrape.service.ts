@@ -196,9 +196,9 @@ const scrape = async (token: any, fullUrl: string) => {
 
   return {
     totalPages,
-    products,
-    newProducts,
-    updatedProducts,
+    products: productsWithStatus,
+    newProducts: newProducts.length,
+    updatedProducts: updatedProducts.length,
   };
 };
 
