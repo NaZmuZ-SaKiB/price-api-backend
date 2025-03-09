@@ -112,8 +112,8 @@ const scrape = async (token: any, fullUrl: string) => {
   const updateOperations = [];
   const createOperations = [];
 
-  const updatedProducts = [];
-  const newProducts = [];
+  const updatedProducts: any = [];
+  const newProducts: any = [];
 
   const existingProducts = await Product.find(
     { url: { $in: products.map((p) => p.url) } },
@@ -169,6 +169,21 @@ const scrape = async (token: any, fullUrl: string) => {
   if (createOperations.length > 0) {
     await Product.bulkWrite(createOperations);
   }
+
+  // Get all products with status
+  const productsWithStatus = products.map((product) => {
+    if (newProducts.some((newProduct: any) => newProduct.url === product.url)) {
+      return { ...product, scrapeStatus: 'new' };
+    } else if (
+      updatedProducts.some(
+        (updatedProduct: any) => updatedProduct.url === product.url,
+      )
+    ) {
+      return { ...product, scrapeStatus: 'updated' };
+    } else {
+      return { ...product, scrapeStatus: 'old' };
+    }
+  });
 
   await History.create({
     url: fullUrl,
