@@ -175,11 +175,10 @@ const scrape = async (token: any, fullUrl: string) => {
   });
 
   return {
-    totalProducts: products.length,
     totalPages,
     products,
-    newProducts: createOperations.length,
-    updatedProducts: updateOperations.length,
+    newProducts: createOperations,
+    updatedProducts: updateOperations,
   };
 };
 
