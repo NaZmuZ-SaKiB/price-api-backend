@@ -26,9 +26,10 @@ const scrape = async (token: any, fullUrl: string) => {
   }
 
   const browser = await puppeteer.launch({
+    headless: true,
     args: [
-      '--disable-setuid-sandbox',
       '--no-sandbox',
+      '--disable-setuid-sandbox',
       '--single-process',
       '--no-zygote',
     ],
