@@ -15,4 +15,6 @@ export default {
   database_url: process.env.DATABASE_URL,
 
   admin_password: process.env.ADMIN_PASSWORD,
+
+  puppeteer_executable_path: process.env.PUPPETEER_EXECUTABLE_PATH,
 };
