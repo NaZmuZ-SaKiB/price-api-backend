@@ -5,6 +5,7 @@ import { Product } from '../product/product.model';
 import { TProduct } from '../product/product.type';
 import AppError from '../../errors/AppError';
 import { History } from '../history/history.model';
+import config from '../../config';
 
 const scrape = async (token: any, fullUrl: string) => {
   if (!fullUrl) {
@@ -24,7 +25,18 @@ const scrape = async (token: any, fullUrl: string) => {
     throw new AppError(httpStatus.BAD_REQUEST, 'URL is not supported');
   }
 
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: [
+      '--disable-setuid-sandbox',
+      '--no-sandbox',
+      '--single-process',
+      '--no-zygote',
+    ],
+    executablePath:
+      config.node_env === 'production'
+        ? config.puppeteer_executable_path
+        : puppeteer.executablePath(),
+  });
   const page = await browser.newPage();
 
   const products = [];
