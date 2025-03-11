@@ -9,7 +9,7 @@ const main = async () => {
   try {
     await mongoose.connect(config.database_url as string);
 
-    const token = Token.findOne({ access: TOKEN_ACCESS.ADMIN });
+    const token = await Token.findOne({ access: TOKEN_ACCESS.ADMIN });
 
     if (!token) {
       await Token.create({
