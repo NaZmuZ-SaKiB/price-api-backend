@@ -6,7 +6,7 @@ import access from '../../middlewares/access';
 const router = Router();
 
 // GET
-router.get('/', token, HistoryController.getAll);
+router.get('/', HistoryController.getAll);
 
 // DELETE
 router.delete('/clear', token, access('admin'), HistoryController.clear);
