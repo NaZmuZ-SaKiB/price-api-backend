@@ -234,6 +234,13 @@ const scrape = async (token: any, fullUrl: string) => {
     .querySelector('.col-md-6.rs-none.text-right p')
     ?.textContent?.trim();
 
+  if (!pageInfoText) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'Invalid URL. Only Provide Startech category page URL',
+    );
+  }
+
   const totalPagesMatch = pageInfoText?.match(/\((\d+) Pages\)/);
 
   let totalPages = 1;
@@ -256,6 +263,13 @@ const scrape = async (token: any, fullUrl: string) => {
 
     // Get products
     const productsElement = document.getElementsByClassName('p-item');
+
+    if (!productsElement) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'Invalid URL. Only Provide Startech category page URL',
+      );
+    }
 
     const data = Array.from(productsElement).map((product) => {
       const title = product
